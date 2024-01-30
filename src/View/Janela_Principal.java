@@ -1,12 +1,29 @@
 package View;
+import DB_Connect.Conecta_banco;
+import java.sql.Connection;
 
 public class Janela_Principal extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Janela_Principal
-     */
+    //instanciar conexao com o banco de dados
+    
+    Conecta_banco db = new Conecta_banco();
+    private Connection con;
+    
     public Janela_Principal() {
         initComponents();
+    }
+    
+    private void status() {
+        try {
+            con = db.conectar();
+            if (con == null) {
+                System.out.println("Erro de conexão");
+            } else {
+                System.out.println("Banco conectado");
+            }
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     /**
@@ -54,6 +71,14 @@ public class Janela_Principal extends javax.swing.JFrame {
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Login");
@@ -113,6 +138,15 @@ public class Janela_Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        this.status();
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments

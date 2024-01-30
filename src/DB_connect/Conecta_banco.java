@@ -1,6 +1,6 @@
 package DB_Connect;
 import java.sql.Connection; //lib do jdbc do java para a conexao com o banco
-import java.sql.DriverManager; 
+import java.sql.DriverManager; //tipo de banco de dados
 
 public class Conecta_banco {
     private Connection con;
