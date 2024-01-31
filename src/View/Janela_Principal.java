@@ -1,5 +1,6 @@
 package View;
 import DB_Connect.Comunica_Banco;
+import Models.Pessoa;
 import Util.Validator;
 import java.awt.HeadlessException;
 import java.sql.Connection;
@@ -12,6 +13,7 @@ public class Janela_Principal extends javax.swing.JFrame {
     //instanciar conexao com o banco de dados
     
     Comunica_Banco db = new Comunica_Banco();
+    Pessoa p = new Pessoa();
     private Connection con;
     
     public Janela_Principal() {
@@ -44,8 +46,8 @@ public class Janela_Principal extends javax.swing.JFrame {
     }
     
     private boolean verificaLogin(String login, String senha) {
-            String lg = db.getDadoString("login", login); //Pega o login
-            String sh = db.getDadoString("senha", senha); // Pega a senha
+            String lg = p.getDadoString("login", login); //Pega o login
+            String sh = p.getDadoString("senha", senha); // Pega a senha
             if (login.equals(lg) && senha.equals(sh)) {
                 return true; // Retorna true se for igual
             } else {
@@ -178,6 +180,7 @@ public class Janela_Principal extends javax.swing.JFrame {
         getContentPane().add(footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 308, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated

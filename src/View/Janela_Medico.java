@@ -5,6 +5,7 @@
 package View;
 
 import DB_Connect.Comunica_Banco;
+import Models.Paciente;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -15,17 +16,19 @@ import java.util.Date;
  * @author orian
  */
 public class Janela_Medico extends javax.swing.JFrame {
-
+    
+    
+    Paciente p = new Paciente();
     Comunica_Banco db = new Comunica_Banco();
     private Connection con;
-    
     
     public Janela_Medico() {
         initComponents();
     }
     
     
-        private void status() {
+    private void status() {
+
         try {
             con = db.conectar();
             if (con == null) {
@@ -39,7 +42,7 @@ public class Janela_Medico extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println(e);
         }
-    }
+        }
     
     private void setarData() {
         Date data = new Date(); // Recebe data do sistema
@@ -168,18 +171,16 @@ public class Janela_Medico extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(64, Short.MAX_VALUE)
-                        .addComponent(imgLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(imgLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(footer, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -197,7 +198,7 @@ public class Janela_Medico extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        System.out.println(db.getALLPacientes());
+        System.out.println(p.getALLPacientes());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
