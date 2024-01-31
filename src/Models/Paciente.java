@@ -17,23 +17,34 @@ public class Paciente {
     
     
     public List<Hospital.Paciente> getALLPacientes() {
-    String sql = "SELECT * FROM paciente"; //faz o SELECT de toda a tabela dos pacientes(posteriormente sera resumido a os vinculados ao medico
-    try {
-        PreparedStatement stmt = con.prepareStatement(sql);
-        ResultSet rs = stmt.executeQuery();
-        List<Hospital.Paciente> listaPaciente = new ArrayList<>();//lista para guardar todos os pacientes
-        while(rs.next()) { //passa por todas as linhas
-            Hospital.Paciente paciente = new Hospital.Paciente();
-            paciente.setId(rs.getInt("id"));
-            paciente.setNome(rs.getString("nome"));
-            paciente.setCpf(rs.getString("cpf"));
-            paciente.setTelefone(rs.getString("telefone"));
-            listaPaciente.add(paciente);
+        String sql = "SELECT * FROM paciente"; //faz o SELECT de toda a tabela dos pacientes(posteriormente sera resumido a os vinculados ao medico
+        try {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            List<Hospital.Paciente> listaPaciente = new ArrayList<>();//lista para guardar todos os pacientes
+            while(rs.next()) { //passa por todas as linhas
+                Hospital.Paciente paciente = new Hospital.Paciente();
+                paciente.setId(rs.getInt("id"));
+                paciente.setNome(rs.getString("nome"));
+                paciente.setCpf(rs.getString("cpf"));
+                paciente.setTelefone(rs.getString("telefone"));
+                listaPaciente.add(paciente);
+            }
+            return listaPaciente;
+        } catch (SQLException ex) {
+            Logger.getLogger(Comunica_Banco.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        return listaPaciente;
-    } catch (SQLException ex) {
-        Logger.getLogger(Comunica_Banco.class.getName()).log(Level.SEVERE, null, ex);
-        return null;
     }
+    
+    public List<Hospital.Paciente> filtraPacientes(List<Hospital.Paciente> p, int id) {
+       List<Hospital.Paciente> antigaLista = p;
+       List<Hospital.Paciente> novaLista = new ArrayList<>();
+       try {
+           
+       } catch (Exception e) {
+           return null; 
+       }
+       return null;
     }
 }

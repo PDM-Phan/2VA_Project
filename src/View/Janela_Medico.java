@@ -1,24 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package View;
 
 import DB_Connect.Comunica_Banco;
+import Models.Usuarios;
 import Models.Paciente;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.Date;
 
-/**
- *
- * @author orian
- */
 public class Janela_Medico extends javax.swing.JFrame {
     
     
     Paciente p = new Paciente(); // instancia o model de pacientes
+    Usuarios u = new Usuarios();
     Comunica_Banco db = new Comunica_Banco();
     private Connection con;
     
@@ -210,6 +204,7 @@ public class Janela_Medico extends javax.swing.JFrame {
 
     private void logoffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoffActionPerformed
         // TODO add your handling code here:
+        u.changeStatusOff();
         Janela_Principal jm = new Janela_Principal();
         this.dispose();
         jm.setVisible(true);
