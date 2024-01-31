@@ -1,6 +1,6 @@
 package View;
 import DB_Connect.Comunica_Banco;
-import Models.Pessoa;
+import Models.Usuarios;
 import Util.Validator;
 import java.awt.HeadlessException;
 import java.sql.Connection;
@@ -13,7 +13,7 @@ public class Janela_Principal extends javax.swing.JFrame {
     //instanciar conexao com o banco de dados
     
     Comunica_Banco db = new Comunica_Banco();
-    Pessoa p = new Pessoa();
+    Usuarios u = new Usuarios(); // instancia o model para usuarios
     private Connection con;
     
     public Janela_Principal() {
@@ -46,8 +46,8 @@ public class Janela_Principal extends javax.swing.JFrame {
     }
     
     private boolean verificaLogin(String login, String senha) {
-            String lg = p.getDadoString("login", login); //Pega o login
-            String sh = p.getDadoString("senha", senha); // Pega a senha
+            String lg = u.getDadoString("login", login); //Pega o login
+            String sh = u.getDadoString("senha", senha); // Pega a senha
             if (login.equals(lg) && senha.equals(sh)) {
                 return true; // Retorna true se for igual
             } else {

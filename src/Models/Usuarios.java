@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
 
-public class Pessoa {
+public class Usuarios {
     private final Comunica_Banco db = new Comunica_Banco();
     private final Connection con = db.conectar();
     

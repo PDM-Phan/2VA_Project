@@ -18,7 +18,7 @@ import java.util.Date;
 public class Janela_Medico extends javax.swing.JFrame {
     
     
-    Paciente p = new Paciente();
+    Paciente p = new Paciente(); // instancia o model de pacientes
     Comunica_Banco db = new Comunica_Banco();
     private Connection con;
     
@@ -63,6 +63,8 @@ public class Janela_Medico extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
         footer = new javax.swing.JPanel();
         lblStatus = new javax.swing.JLabel();
         lblData = new javax.swing.JLabel();
@@ -72,6 +74,13 @@ public class Janela_Medico extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         bLogoff = new javax.swing.JMenu();
         logoff = new javax.swing.JMenuItem();
+        mOpcao = new javax.swing.JMenu();
+        mAtender = new javax.swing.JMenuItem();
+        mAlta = new javax.swing.JMenuItem();
+
+        jMenuItem1.setText("jMenuItem1");
+
+        jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hospital Misericordia");
@@ -154,6 +163,16 @@ public class Janela_Medico extends javax.swing.JFrame {
         bLogoff.add(logoff);
 
         jMenuBar1.add(bLogoff);
+
+        mOpcao.setText("Opções");
+
+        mAtender.setText("Atender");
+        mOpcao.add(mAtender);
+
+        mAlta.setText("Dar alta");
+        mOpcao.add(mAlta);
+
+        jMenuBar1.add(mOpcao);
 
         setJMenuBar(jMenuBar1);
 
@@ -242,9 +261,14 @@ public class Janela_Medico extends javax.swing.JFrame {
     private javax.swing.JLabel imgDoc;
     private javax.swing.JPanel imgLocal;
     private javax.swing.JButton jButton1;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblStatus;
     private javax.swing.JMenuItem logoff;
+    private javax.swing.JMenuItem mAlta;
+    private javax.swing.JMenuItem mAtender;
+    private javax.swing.JMenu mOpcao;
     // End of variables declaration//GEN-END:variables
 }
