@@ -70,6 +70,9 @@ public class Janela_Medico extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
         footer = new javax.swing.JPanel();
         lblStatus = new javax.swing.JLabel();
         lblData = new javax.swing.JLabel();
@@ -83,12 +86,21 @@ public class Janela_Medico extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         bConfig = new javax.swing.JMenu();
         bLogoff = new javax.swing.JMenuItem();
+        mAcao = new javax.swing.JMenu();
+        mAtender = new javax.swing.JMenuItem();
+        mAlta = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
         jMenu1.setText("jMenu1");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jMenu2.setText("File");
+        jMenuBar2.add(jMenu2);
+
+        jMenu3.setText("Edit");
+        jMenuBar2.add(jMenu3);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hospital Misericordia");
@@ -168,9 +180,18 @@ public class Janela_Medico extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Nome do Paciente", "Tipo de atendimento", "Status", "Ação"
+                "ID", "Nome do Paciente", "Tipo de atendimento", "Status"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblPacientes.setCellSelectionEnabled(true);
         jScrollPane1.setViewportView(tblPacientes);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 590, 190));
@@ -196,6 +217,21 @@ public class Janela_Medico extends javax.swing.JFrame {
         bConfig.add(bLogoff);
 
         jMenuBar1.add(bConfig);
+
+        mAcao.setText("Ações");
+
+        mAtender.setText("Atender");
+        mAcao.add(mAtender);
+
+        mAlta.setText("Dar alta");
+        mAlta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mAltaActionPerformed(evt);
+            }
+        });
+        mAcao.add(mAlta);
+
+        jMenuBar1.add(mAcao);
 
         setJMenuBar(jMenuBar1);
 
@@ -235,6 +271,10 @@ public class Janela_Medico extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_geraLista1ActionPerformed
 
+    private void mAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mAltaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mAltaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -273,12 +313,18 @@ public class Janela_Medico extends javax.swing.JFrame {
     private javax.swing.JButton geraLista1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblPesquisa;
     private javax.swing.JLabel lblStatus;
+    private javax.swing.JMenu mAcao;
+    private javax.swing.JMenuItem mAlta;
+    private javax.swing.JMenuItem mAtender;
     private javax.swing.JTable tblPacientes;
     private javax.swing.JTextField txtPesquisa;
     // End of variables declaration//GEN-END:variables
