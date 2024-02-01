@@ -153,14 +153,14 @@ public class Janela_Principal extends javax.swing.JFrame {
         getContentPane().add(botaoEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(114, 129, 90, 30));
 
         textHeader.setEditable(false);
-        textHeader.setBackground(new java.awt.Color(0, 255, 255));
+        textHeader.setBackground(new java.awt.Color(0, 153, 153));
         textHeader.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         textHeader.setForeground(new java.awt.Color(255, 255, 255));
         textHeader.setText("------HOSPITAL MISERICORDIA------");
         textHeader.setBorder(null);
-        getContentPane().add(textHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(textHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 310, -1));
 
-        jPanel1.setBackground(new java.awt.Color(0, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(0, 153, 153));
         jPanel1.setPreferredSize(new java.awt.Dimension(310, 44));
 
         lblData.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N

@@ -21,6 +21,7 @@ public class Janela_Medico extends javax.swing.JFrame {
     
     public Janela_Medico() {
         initComponents();
+        geraLista();
     }
     
     
@@ -72,39 +73,63 @@ public class Janela_Medico extends javax.swing.JFrame {
         int linhaSelecionada = tblPacientes.getSelectedRow(); // pega a linha selecionada
         String idPacienteSTR = tblPacientes.getValueAt(linhaSelecionada, 0).toString(); //Pega o valor da celula em string
         int idPacienteINT = Integer.parseInt(idPacienteSTR); // Transforma a string ID em INT
-        System.out.println(idPacienteINT);
         String nomePaciente = tblPacientes.getValueAt(linhaSelecionada, 1).toString();
-        System.out.println(nomePaciente);
         String tipoATDPaciente = tblPacientes.getValueAt(linhaSelecionada, 2).toString();
-        System.out.println(tipoATDPaciente);
-        String statusPaciente = tblPacientes.getValueAt(linhaSelecionada, 3).toString();
-        if (atd.equals("Atender")) {
-            atd = "Em atendimento";
+        String statusPaciente = tblPacientes.getValueAt(linhaSelecionada, 3).toString();  
+        String nAtd = verificaStatusPaciente(atd); // Chama a funçao para verificar o status
+        
+        if (nAtd.equals("invalido")) {
+            // Se invalido, muda a linha para repetir o processo
+            linhaSelecionada = -2;
         } else {
-            atd = "Alta confirmada";
+            statusPaciente = nAtd; // atualiza o status do paciente = (Em atendimento / Alta confirmada)
         }
-        statusPaciente = atd; // atualiza o status do paciente = (Em atendimento / Alta confirmada)
-        System.out.println(statusPaciente);
-        
-        
-        if (linhaSelecionada == -1) {
-            JOptionPane.showMessageDialog(this, "Nenhum paciente selecionado.");
-        } else {
-            if (tblPacientes.getSelectedRowCount() == 1) {
-                // se apenas uma linha for selecionada, entao execute
-                DefaultTableModel tabelaPacientes = (DefaultTableModel) tblPacientes.getModel(); //Traz as caracteristicas da tabela para a variavel
-                tabelaPacientes.setValueAt(idPacienteINT, linhaSelecionada, 0);
-                tabelaPacientes.setValueAt(nomePaciente, linhaSelecionada, 1);
-                tabelaPacientes.setValueAt(tipoATDPaciente, linhaSelecionada, 2);
-                tabelaPacientes.setValueAt(statusPaciente, linhaSelecionada, 3);
 
-            } else {
-                JOptionPane.showMessageDialog(this, "Selecione apenas um paciente.");
-            };
+        switch (linhaSelecionada) {
+            case -1 -> JOptionPane.showMessageDialog(this, "Nenhum paciente selecionado."); // Auto explicativo
+            case -2 -> JOptionPane.showMessageDialog(this, "Ação invalida."); // Retornou status "invalido"
+            default -> {
+                if (tblPacientes.getSelectedRowCount() == 1) {
+                    // se apenas uma linha for selecionada, entao execute
+                    DefaultTableModel tabelaPacientes = (DefaultTableModel) tblPacientes.getModel(); //Traz as caracteristicas da tabela para a variavel
+                    tabelaPacientes.setValueAt(idPacienteINT, linhaSelecionada, 0);
+                    tabelaPacientes.setValueAt(nomePaciente, linhaSelecionada, 1);
+                    tabelaPacientes.setValueAt(tipoATDPaciente, linhaSelecionada, 2);
+                    tabelaPacientes.setValueAt(statusPaciente, linhaSelecionada, 3);
+                    
+                } else {
+                    JOptionPane.showMessageDialog(this, "Selecione apenas um paciente.");
+                }   ;
+            }
         }
         
     }
     
+    private String verificaStatusPaciente(String atd) {
+        int linhaSelecionada = tblPacientes.getSelectedRow(); // pega a linha selecionada
+        String statusPaciente = tblPacientes.getValueAt(linhaSelecionada, 3).toString(); // Pega o valor da coluna desejada
+        
+        if (statusPaciente.equals("Aguardando Atendimento")) { // verifica se o status esta "Aguardando Atendimento"
+            if(atd.equals("Atender")) { // Verifica se esta tentando atender
+                // se sim, vai mudar o status de "Aguardando Atendimento" para "Em atendimento"
+                statusPaciente = "Em atendimento";
+            } else {
+                statusPaciente = "invalido";
+            }
+        } else { // Se o status nao é "Aguardando Atendimento", significa que ou esta "Em atendimento" ou "Alta confirmada"
+            if (statusPaciente.equals("Em atendimento")) { // verifica o status atual
+                if (atd.equals("Dar alta")) { // So pode dar alta se estiver em atendimento, senao é invalida a ação
+                    statusPaciente = "Alta confirmada";
+                } else {
+                    statusPaciente = "invalido";
+                }
+            } else { // Se nao for nenhuma das opçoes significa que esta com o status "Alta confirmada", não permitindo alterar o status do paciente
+                statusPaciente = "invalido";
+            }
+        };
+        return statusPaciente; // retorna o status
+
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -127,7 +152,6 @@ public class Janela_Medico extends javax.swing.JFrame {
         bAtender = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPacientes = new javax.swing.JTable();
-        geraLista1 = new javax.swing.JButton();
         bAlta = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         bConfig = new javax.swing.JMenu();
@@ -159,7 +183,7 @@ public class Janela_Medico extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        footer.setBackground(new java.awt.Color(0, 255, 255));
+        footer.setBackground(new java.awt.Color(0, 153, 153));
         footer.setPreferredSize(new java.awt.Dimension(613, 44));
 
         lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/dboff.png"))); // NOI18N
@@ -200,7 +224,7 @@ public class Janela_Medico extends javax.swing.JFrame {
                 bAtenderActionPerformed(evt);
             }
         });
-        getContentPane().add(bAtender, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, -1, -1));
+        getContentPane().add(bAtender, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, -1));
 
         tblPacientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -223,16 +247,6 @@ public class Janela_Medico extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 590, 190));
 
-        geraLista1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        geraLista1.setText("Atualizar");
-        geraLista1.setBorderPainted(false);
-        geraLista1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                geraLista1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(geraLista1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, -1, -1));
-
         bAlta.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         bAlta.setText("Dar alta");
         bAlta.setBorderPainted(false);
@@ -241,7 +255,7 @@ public class Janela_Medico extends javax.swing.JFrame {
                 bAltaActionPerformed(evt);
             }
         });
-        getContentPane().add(bAlta, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, -1, -1));
+        getContentPane().add(bAlta, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, -1, -1));
 
         bConfig.setText("Configurações");
 
@@ -283,14 +297,8 @@ public class Janela_Medico extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         u.changeStatusOff();
-        resetStatusAtd();
         
     }//GEN-LAST:event_formWindowClosing
-
-    private void geraLista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_geraLista1ActionPerformed
-        // TODO add your handling code here:
-        geraLista(); //Atualiza/Mostra a 
-    }//GEN-LAST:event_geraLista1ActionPerformed
 
     private void bAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAltaActionPerformed
         // TODO add your handling code here:
@@ -332,7 +340,6 @@ public class Janela_Medico extends javax.swing.JFrame {
     private javax.swing.JMenu bConfig;
     private javax.swing.JMenuItem bLogoff;
     private javax.swing.JPanel footer;
-    private javax.swing.JButton geraLista1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

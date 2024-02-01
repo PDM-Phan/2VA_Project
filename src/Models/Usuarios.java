@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
+import java.util.ArrayList;
 
 public class Usuarios {
     private final Comunica_Banco db = new Comunica_Banco();
@@ -80,5 +81,29 @@ public class Usuarios {
         } catch (SQLException e) {
             System.out.println("Usuarios.changeStatusOff(): " + e);
         }
+    }
+    
+    public ArrayList<Hospital.Usuario> getAllMedicos() {
+        ArrayList<Hospital.Usuario> listaMedico = new ArrayList<>();
+        String sqlMedico = "SELECT * FROM usuarios WHERE especialidade = 'Medico';";
+        try {
+            PreparedStatement stmt1 = con.prepareStatement(sqlMedico);
+            ResultSet rs1 = stmt1.executeQuery();
+            
+            while (rs1.next()) {
+                Hospital.Usuario user = new Hospital.Usuario();
+                user.setLogin(rs1.getString("login"));
+                user.setSenha(rs1.getString("senha"));
+                user.setNome("nome");
+                user.setEspecialidade("especialidade");
+                user.setStatus_lg(rs1.getInt("id"));
+                listaMedico.add(user);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("Usuarios.getAllMedicos: " + e);
+        }
+        
+        return listaMedico;
     }
 }

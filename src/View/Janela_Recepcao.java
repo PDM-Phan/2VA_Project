@@ -72,7 +72,7 @@ public class Janela_Recepcao extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(0, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(0, 153, 153));
 
         lblData.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblData.setForeground(new java.awt.Color(255, 255, 255));
@@ -84,7 +84,7 @@ public class Janela_Recepcao extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblData)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 457, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 380, Short.MAX_VALUE)
                 .addComponent(lblStatus)
                 .addGap(14, 14, 14))
         );
@@ -101,7 +101,7 @@ public class Janela_Recepcao extends javax.swing.JFrame {
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 229, 477, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 229, 400, -1));
 
         bConfig.setText("Configuração");
 
