@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 
 public class Janela_Principal extends javax.swing.JFrame {
     //instanciar conexao com o banco de dados
+    //https://www.youtube.com/watch?v=6jBECzSJCHU&list=PLwQkYMetu0ObRTdYz5eK-5exA1yLhiYS0&index=13
     
     Comunica_Banco db = new Comunica_Banco();
     Usuarios u = new Usuarios(); // instancia o model para usuarios
