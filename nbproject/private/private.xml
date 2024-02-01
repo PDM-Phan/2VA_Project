@@ -4,13 +4,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/orian/OneDrive/Documentos/NetBeansProjects/2VA_Projeto/src/View/Janela_Principal.java</file>
-            <file>file:/C:/Users/orian/OneDrive/Documentos/NetBeansProjects/2VA_Projeto/src/Hospital/Pessoa.java</file>
             <file>file:/C:/Users/orian/OneDrive/Documentos/NetBeansProjects/2VA_Projeto/src/Models/Usuarios.java</file>
             <file>file:/C:/Users/orian/OneDrive/Documentos/NetBeansProjects/2VA_Projeto/src/View/Janela_Medico.java</file>
-            <file>file:/C:/Users/orian/OneDrive/Documentos/NetBeansProjects/2VA_Projeto/src/Hospital/Usuario.java</file>
-            <file>file:/C:/Users/orian/OneDrive/Documentos/NetBeansProjects/2VA_Projeto/src/Hospital/Paciente.java</file>
-            <file>file:/C:/Users/orian/OneDrive/Documentos/NetBeansProjects/2VA_Projeto/src/Util/Validator.java</file>
-            <file>file:/C:/Users/orian/OneDrive/Documentos/NetBeansProjects/2VA_Projeto/src/DB_connect/Comunica_Banco.java</file>
+            <file>file:/C:/Users/orian/OneDrive/Documentos/NetBeansProjects/2VA_Projeto/src/View/Janela_Recepcao.java</file>
         </group>
     </open-files>
 </project-private>

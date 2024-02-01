@@ -6,7 +6,9 @@ import Models.Paciente;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.table.DefaultTableModel;
 
 public class Janela_Medico extends javax.swing.JFrame {
     
@@ -45,7 +47,15 @@ public class Janela_Medico extends javax.swing.JFrame {
     }
 
     
-    
+    private void geraLista() {
+        ArrayList<Hospital.Paciente> pct = p.filtraPacientes();
+        
+        DefaultTableModel tabelaPacientes = (DefaultTableModel) tblPacientes.getModel(); //Traz as caracteristicas da tabela para a variavel
+        
+        for (Hospital.Paciente paciente : pct) {
+            
+        }
+    }
     
     
     /**
@@ -59,23 +69,26 @@ public class Janela_Medico extends javax.swing.JFrame {
 
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
+        jComboBox1 = new javax.swing.JComboBox<>();
         footer = new javax.swing.JPanel();
         lblStatus = new javax.swing.JLabel();
         lblData = new javax.swing.JLabel();
-        imgLocal = new javax.swing.JPanel();
-        imgDoc = new javax.swing.JLabel();
-        bImagem = new javax.swing.JButton();
-        geraLista = new javax.swing.JButton();
+        bAcao = new javax.swing.JButton();
+        lblPesquisa = new javax.swing.JLabel();
+        txtPesquisa = new javax.swing.JTextField();
+        bPesquisa = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblPacientes = new javax.swing.JTable();
+        geraLista1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         bConfig = new javax.swing.JMenu();
         bLogoff = new javax.swing.JMenuItem();
-        mOpcao = new javax.swing.JMenu();
-        mAtender = new javax.swing.JMenuItem();
-        mAlta = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
         jMenu1.setText("jMenu1");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hospital Misericordia");
@@ -85,10 +98,11 @@ public class Janela_Medico extends javax.swing.JFrame {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
             }
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         footer.setBackground(new java.awt.Color(0, 255, 255));
         footer.setPreferredSize(new java.awt.Dimension(613, 44));
@@ -105,7 +119,7 @@ public class Janela_Medico extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, footerLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblData)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 560, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 537, Short.MAX_VALUE)
                 .addComponent(lblStatus)
                 .addGap(15, 15, 15))
         );
@@ -121,43 +135,55 @@ public class Janela_Medico extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        imgLocal.setBackground(new java.awt.Color(0, 255, 255));
+        getContentPane().add(footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 590, 46));
 
-        javax.swing.GroupLayout imgLocalLayout = new javax.swing.GroupLayout(imgLocal);
-        imgLocal.setLayout(imgLocalLayout);
-        imgLocalLayout.setHorizontalGroup(
-            imgLocalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(imgLocalLayout.createSequentialGroup()
-                .addGap(120, 120, 120)
-                .addComponent(imgDoc)
-                .addContainerGap(123, Short.MAX_VALUE))
-        );
-        imgLocalLayout.setVerticalGroup(
-            imgLocalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, imgLocalLayout.createSequentialGroup()
-                .addContainerGap(172, Short.MAX_VALUE)
-                .addComponent(imgDoc)
-                .addGap(128, 128, 128))
-        );
-
-        bImagem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        bImagem.setText("Abrir Imagem");
-        bImagem.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        bImagem.setBorderPainted(false);
-        bImagem.addActionListener(new java.awt.event.ActionListener() {
+        bAcao.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        bAcao.setText("Confirmar");
+        bAcao.setBorderPainted(false);
+        bAcao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bImagemActionPerformed(evt);
+                bAcaoActionPerformed(evt);
             }
         });
+        getContentPane().add(bAcao, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, -1, -1));
 
-        geraLista.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        geraLista.setText("Atualizar");
-        geraLista.setBorderPainted(false);
-        geraLista.addActionListener(new java.awt.event.ActionListener() {
+        lblPesquisa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblPesquisa.setLabelFor(txtPesquisa);
+        lblPesquisa.setText("Pesquisar Paciente por ID:");
+        getContentPane().add(lblPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, -1, -1));
+        getContentPane().add(txtPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 10, 90, 20));
+
+        bPesquisa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        bPesquisa.setText("Pesquisar");
+        bPesquisa.setBorderPainted(false);
+        bPesquisa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                geraListaActionPerformed(evt);
+                bPesquisaActionPerformed(evt);
             }
         });
+        getContentPane().add(bPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 30, -1, -1));
+
+        tblPacientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Nome do Paciente", "Tipo de atendimento", "Status", "Ação"
+            }
+        ));
+        jScrollPane1.setViewportView(tblPacientes);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 590, 190));
+
+        geraLista1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        geraLista1.setText("Atualizar");
+        geraLista1.setBorderPainted(false);
+        geraLista1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                geraLista1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(geraLista1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, -1, -1));
 
         bConfig.setText("Configurações");
 
@@ -171,47 +197,7 @@ public class Janela_Medico extends javax.swing.JFrame {
 
         jMenuBar1.add(bConfig);
 
-        mOpcao.setText("Opções");
-
-        mAtender.setText("Atender");
-        mOpcao.add(mAtender);
-
-        mAlta.setText("Dar alta");
-        mOpcao.add(mAlta);
-
-        jMenuBar1.add(mOpcao);
-
         setJMenuBar(jMenuBar1);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(footer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(bImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(geraLista)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(imgLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(bImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(geraLista)
-                        .addComponent(imgLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(footer, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
 
         pack();
         setLocationRelativeTo(null);
@@ -231,20 +217,23 @@ public class Janela_Medico extends javax.swing.JFrame {
         jm.setVisible(true);
     }//GEN-LAST:event_bLogoffActionPerformed
 
-    private void bImagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bImagemActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_bImagemActionPerformed
-
-    private void geraListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_geraListaActionPerformed
+    private void bAcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAcaoActionPerformed
         // TODO add your handling code here:
         System.out.println(p.filtraPacientes());
-    }//GEN-LAST:event_geraListaActionPerformed
+    }//GEN-LAST:event_bAcaoActionPerformed
 
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+    private void bPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPesquisaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bPesquisaActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         u.changeStatusOff();
-    }//GEN-LAST:event_formWindowClosed
+    }//GEN-LAST:event_formWindowClosing
+
+    private void geraLista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_geraLista1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_geraLista1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -262,40 +251,35 @@ public class Janela_Medico extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Janela_Medico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Janela_Medico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Janela_Medico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Janela_Medico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Janela_Medico().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Janela_Medico().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bAcao;
     private javax.swing.JMenu bConfig;
-    private javax.swing.JButton bImagem;
     private javax.swing.JMenuItem bLogoff;
+    private javax.swing.JButton bPesquisa;
     private javax.swing.JPanel footer;
-    private javax.swing.JButton geraLista;
-    private javax.swing.JLabel imgDoc;
-    private javax.swing.JPanel imgLocal;
+    private javax.swing.JButton geraLista1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblData;
+    private javax.swing.JLabel lblPesquisa;
     private javax.swing.JLabel lblStatus;
-    private javax.swing.JMenuItem mAlta;
-    private javax.swing.JMenuItem mAtender;
-    private javax.swing.JMenu mOpcao;
+    private javax.swing.JTable tblPacientes;
+    private javax.swing.JTextField txtPesquisa;
     // End of variables declaration//GEN-END:variables
 }

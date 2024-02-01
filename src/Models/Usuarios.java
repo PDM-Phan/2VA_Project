@@ -74,8 +74,9 @@ public class Usuarios {
             PreparedStatement stmt2 = con.prepareStatement("UPDATE usuarios SET status_lg = 0 WHERE id = ?");
             stmt2.setInt(1, rs.getInt("id"));
             stmt2.executeUpdate();
+            System.out.println("stmt2 passou");
         } catch (SQLException e) {
-            //System.out.println("Erro ao atualizar " + e);
+            System.out.println("Erro ao atualizar " + e);
         }
     }
 }

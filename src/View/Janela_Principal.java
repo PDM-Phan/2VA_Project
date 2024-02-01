@@ -67,6 +67,7 @@ public class Janela_Principal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         lblLogin = new javax.swing.JLabel();
         lblSenha = new javax.swing.JLabel();
         textSenha = new javax.swing.JPasswordField();
@@ -257,15 +258,14 @@ public class Janela_Principal extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Janela_Principal().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Janela_Principal().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoEntrar;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
     private javax.swing.JLabel jLabel1;
