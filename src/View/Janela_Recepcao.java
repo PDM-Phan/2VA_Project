@@ -1,7 +1,7 @@
 package View;
 
 import DB_Connect.Comunica_Banco;
-import Models.Usuarios;
+import DAO.Usuarios;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -160,6 +160,8 @@ public class Janela_Recepcao extends javax.swing.JFrame {
 
     private void bCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCadastroActionPerformed
         // TODO add your handling code here:
+        Janela_Recepcao_Cadastrar jrc = new Janela_Recepcao_Cadastrar();
+        jrc.setVisible(true);
     }//GEN-LAST:event_bCadastroActionPerformed
 
     /**

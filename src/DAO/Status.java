@@ -1,4 +1,4 @@
-package Models;
+package DAO;
 
 import DB_Connect.Comunica_Banco;
 import java.sql.Connection;

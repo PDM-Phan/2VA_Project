@@ -1,7 +1,9 @@
 package View;
 
+import DAO.Status;
+import DAO.Usuarios;
+import DAO.Paciente;
 import DB_Connect.Comunica_Banco;
-import Models.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -50,10 +52,10 @@ public class Janela_Medico extends javax.swing.JFrame {
 
     
     private void geraLista() {
-        ArrayList<Hospital.Paciente> pct = p.filtraPacientes(); // Pega a lista de todos os pacientes do medico logado
+        ArrayList<Models.Paciente> pct = p.filtraPacientes(); // Pega a lista de todos os pacientes do medico logado
         DefaultTableModel tabelaPacientes = (DefaultTableModel) tblPacientes.getModel(); //Traz as caracteristicas da tabela para a variavel
         
-        for (Hospital.Paciente paciente : pct) { // Percorre todas os pacientes da lista
+        for (Models.Paciente paciente : pct) { // Percorre todas os pacientes da lista
             Object[] obj = new Object[] {
                 paciente.getId(),
                 paciente.getNome(),

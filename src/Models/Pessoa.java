@@ -1,4 +1,4 @@
-package Hospital;
+package Models;
 
 public class Pessoa {
     private String nome;

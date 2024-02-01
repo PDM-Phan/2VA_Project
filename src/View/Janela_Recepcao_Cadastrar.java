@@ -4,13 +4,17 @@
  */
 package View;
 
+import DAO.Usuarios;
+import DAO.Paciente;
 import DB_Connect.Comunica_Banco;
-import Models.*;
+import Models.Usuario;
+import Util.Validator;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,6 +29,9 @@ public class Janela_Recepcao_Cadastrar extends javax.swing.JFrame {
 
     public Janela_Recepcao_Cadastrar() {
         initComponents();
+        txtNome.setDocument(new Validator(30));
+        txtCPF.setDocument(new Validator(11));
+        txtTelefone.setDocument(new Validator(15));
     }
     
     private void status() {
@@ -70,9 +77,13 @@ public class Janela_Recepcao_Cadastrar extends javax.swing.JFrame {
         lblAtd = new javax.swing.JLabel();
         jCBatd = new javax.swing.JComboBox<>();
         lblMedicoAtd = new javax.swing.JLabel();
-        jCBmedico = new javax.swing.JComboBox<>();
+        jCBmedico = new javax.swing.JComboBox();
+        txtTelefone = new javax.swing.JTextField();
+        txtCPF = new javax.swing.JTextField();
+        txtNome = new javax.swing.JTextField();
+        bCadastrar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Hospital Misericordia");
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/Img/5724972_building_healthcare_hospital_medical_nursing_icon.png")).getImage());
         setResizable(false);
@@ -123,7 +134,7 @@ public class Janela_Recepcao_Cadastrar extends javax.swing.JFrame {
 
         jCBatd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jCBatd.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Catarata", "Retina", "Glaucoma" }));
-        getContentPane().add(jCBatd, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, -1, -1));
+        getContentPane().add(jCBatd, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, -1, -1));
 
         lblMedicoAtd.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblMedicoAtd.setText("Medico para atender: ");
@@ -141,6 +152,24 @@ public class Janela_Recepcao_Cadastrar extends javax.swing.JFrame {
         });
         getContentPane().add(jCBmedico, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, -1, -1));
 
+        txtTelefone.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        getContentPane().add(txtTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 90, -1));
+
+        txtCPF.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        getContentPane().add(txtCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 90, -1));
+
+        txtNome.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        getContentPane().add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 90, -1));
+
+        bCadastrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bCadastrar.setText("Cadastrar");
+        bCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bCadastrarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(bCadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 250, 100, 30));
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -153,14 +182,28 @@ public class Janela_Recepcao_Cadastrar extends javax.swing.JFrame {
 
     private void jCBmedicoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jCBmedicoAncestorAdded
         // TODO add your handling code here:
-        ArrayList<Hospital.Usuario> listaMedico = u.getAllMedicos();
+        ArrayList<Models.Usuario> listaMedico = u.getAllMedicos();
         
         jCBmedico.removeAll(); //Remove qualquer item dentro do combo box
-        for (Hospital.Usuario m : listaMedico) { // Percorre a lista
-            jCBmedico.addItem(m.getNome()); // Adiciona o nome do medico na lista
+        for (Models.Usuario m : listaMedico) { // Percorre a lista
+            jCBmedico.addItem(m); // Adiciona o nome do medico na lista
         }
         
     }//GEN-LAST:event_jCBmedicoAncestorAdded
+
+    private void bCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCadastrarActionPerformed
+        // TODO add your handling code here:
+        Models.Usuario medico = new Usuario();
+        String atd = jCBatd.getSelectedItem().toString();
+        System.out.println(atd);
+        medico = (Models.Usuario) jCBmedico.getSelectedItem();
+        String resultado = p.cadastrarPaciente(txtNome.getText(), txtCPF.getText(), txtTelefone.getText(), atd, medico);
+        if (resultado.equals("realizado")) {
+            JOptionPane.showMessageDialog(this, "Cadastro do paciente realizado com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Preencha TODOS os campos para realizar o cadastro!");
+        }
+    }//GEN-LAST:event_bCadastrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,8 +235,9 @@ public class Janela_Recepcao_Cadastrar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bCadastrar;
     private javax.swing.JComboBox<String> jCBatd;
-    private javax.swing.JComboBox<String> jCBmedico;
+    private javax.swing.JComboBox jCBmedico;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblAtd;
     private javax.swing.JLabel lblCpf;
@@ -204,5 +248,8 @@ public class Janela_Recepcao_Cadastrar extends javax.swing.JFrame {
     private javax.swing.JLabel lblTelefone;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel pHeader;
+    private javax.swing.JTextField txtCPF;
+    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
 }

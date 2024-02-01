@@ -1,6 +1,6 @@
 package View;
 import DB_Connect.Comunica_Banco;
-import Models.Usuarios;
+import DAO.Usuarios;
 import Util.Validator;
 import java.awt.HeadlessException;
 import java.sql.Connection;
@@ -21,7 +21,6 @@ public class Janela_Principal extends javax.swing.JFrame {
         initComponents();
         textLogin.setDocument(new Validator(30));
         textSenha.setDocument(new Validator(30));
-        
     }
     
     private void status() {

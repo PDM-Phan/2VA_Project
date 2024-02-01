@@ -1,4 +1,4 @@
-package Hospital;
+package Models;
 
 public class Usuario extends Pessoa {
     private int id;
@@ -46,6 +46,11 @@ public class Usuario extends Pessoa {
 
     public void setStatus_lg(int status_lg) {
         this.status_lg = status_lg;
+    }
+    
+    @Override
+    public String toString() {
+        return this.getNome();
     }
     
 }
