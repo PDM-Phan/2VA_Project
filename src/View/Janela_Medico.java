@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Janela_Medico extends javax.swing.JFrame {
@@ -62,6 +63,48 @@ public class Janela_Medico extends javax.swing.JFrame {
         }
     }
     
+    private void resetStatusAtd() {
+        setStatusAtd("Aguardando atendimento");
+    
+    }
+     
+    private void setStatusAtd(String atd) {
+        int linhaSelecionada = tblPacientes.getSelectedRow(); // pega a linha selecionada
+        String idPacienteSTR = tblPacientes.getValueAt(linhaSelecionada, 0).toString(); //Pega o valor da celula em string
+        int idPacienteINT = Integer.parseInt(idPacienteSTR); // Transforma a string ID em INT
+        System.out.println(idPacienteINT);
+        String nomePaciente = tblPacientes.getValueAt(linhaSelecionada, 1).toString();
+        System.out.println(nomePaciente);
+        String tipoATDPaciente = tblPacientes.getValueAt(linhaSelecionada, 2).toString();
+        System.out.println(tipoATDPaciente);
+        String statusPaciente = tblPacientes.getValueAt(linhaSelecionada, 3).toString();
+        if (atd.equals("Atender")) {
+            atd = "Em atendimento";
+        } else {
+            atd = "Alta confirmada";
+        }
+        statusPaciente = atd; // atualiza o status do paciente = (Em atendimento / Alta confirmada)
+        System.out.println(statusPaciente);
+        
+        
+        if (linhaSelecionada == -1) {
+            JOptionPane.showMessageDialog(this, "Nenhum paciente selecionado.");
+        } else {
+            if (tblPacientes.getSelectedRowCount() == 1) {
+                // se apenas uma linha for selecionada, entao execute
+                DefaultTableModel tabelaPacientes = (DefaultTableModel) tblPacientes.getModel(); //Traz as caracteristicas da tabela para a variavel
+                tabelaPacientes.setValueAt(idPacienteINT, linhaSelecionada, 0);
+                tabelaPacientes.setValueAt(nomePaciente, linhaSelecionada, 1);
+                tabelaPacientes.setValueAt(tipoATDPaciente, linhaSelecionada, 2);
+                tabelaPacientes.setValueAt(statusPaciente, linhaSelecionada, 3);
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecione apenas um paciente.");
+            };
+        }
+        
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -82,9 +125,6 @@ public class Janela_Medico extends javax.swing.JFrame {
         lblStatus = new javax.swing.JLabel();
         lblData = new javax.swing.JLabel();
         bAtender = new javax.swing.JButton();
-        lblPesquisa = new javax.swing.JLabel();
-        txtPesquisa = new javax.swing.JTextField();
-        bPesquisa = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPacientes = new javax.swing.JTable();
         geraLista1 = new javax.swing.JButton();
@@ -92,9 +132,6 @@ public class Janela_Medico extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         bConfig = new javax.swing.JMenu();
         bLogoff = new javax.swing.JMenuItem();
-        mAcao = new javax.swing.JMenu();
-        mAtender = new javax.swing.JMenuItem();
-        mAlta = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -165,22 +202,6 @@ public class Janela_Medico extends javax.swing.JFrame {
         });
         getContentPane().add(bAtender, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, -1, -1));
 
-        lblPesquisa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblPesquisa.setLabelFor(txtPesquisa);
-        lblPesquisa.setText("Pesquisar Paciente por ID:");
-        getContentPane().add(lblPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, -1, -1));
-        getContentPane().add(txtPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 10, 90, 20));
-
-        bPesquisa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        bPesquisa.setText("Pesquisar");
-        bPesquisa.setBorderPainted(false);
-        bPesquisa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bPesquisaActionPerformed(evt);
-            }
-        });
-        getContentPane().add(bPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 30, -1, -1));
-
         tblPacientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -197,7 +218,7 @@ public class Janela_Medico extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblPacientes.setCellSelectionEnabled(true);
+        tblPacientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(tblPacientes);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 590, 190));
@@ -234,21 +255,6 @@ public class Janela_Medico extends javax.swing.JFrame {
 
         jMenuBar1.add(bConfig);
 
-        mAcao.setText("Ações");
-
-        mAtender.setText("Atender");
-        mAcao.add(mAtender);
-
-        mAlta.setText("Dar alta");
-        mAlta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mAltaActionPerformed(evt);
-            }
-        });
-        mAcao.add(mAlta);
-
-        jMenuBar1.add(mAcao);
-
         setJMenuBar(jMenuBar1);
 
         pack();
@@ -271,11 +277,14 @@ public class Janela_Medico extends javax.swing.JFrame {
 
     private void bAtenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtenderActionPerformed
         // TODO add your handling code here:
+        setStatusAtd(bAtender.getText());
     }//GEN-LAST:event_bAtenderActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         u.changeStatusOff();
+        resetStatusAtd();
+        
     }//GEN-LAST:event_formWindowClosing
 
     private void geraLista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_geraLista1ActionPerformed
@@ -283,17 +292,10 @@ public class Janela_Medico extends javax.swing.JFrame {
         geraLista(); //Atualiza/Mostra a 
     }//GEN-LAST:event_geraLista1ActionPerformed
 
-    private void mAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mAltaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_mAltaActionPerformed
-
     private void bAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAltaActionPerformed
         // TODO add your handling code here:
+        setStatusAtd(bAlta.getText());
     }//GEN-LAST:event_bAltaActionPerformed
-
-    private void bPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPesquisaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bPesquisaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -329,7 +331,6 @@ public class Janela_Medico extends javax.swing.JFrame {
     private javax.swing.JButton bAtender;
     private javax.swing.JMenu bConfig;
     private javax.swing.JMenuItem bLogoff;
-    private javax.swing.JButton bPesquisa;
     private javax.swing.JPanel footer;
     private javax.swing.JButton geraLista1;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -341,12 +342,7 @@ public class Janela_Medico extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblData;
-    private javax.swing.JLabel lblPesquisa;
     private javax.swing.JLabel lblStatus;
-    private javax.swing.JMenu mAcao;
-    private javax.swing.JMenuItem mAlta;
-    private javax.swing.JMenuItem mAtender;
     private javax.swing.JTable tblPacientes;
-    private javax.swing.JTextField txtPesquisa;
     // End of variables declaration//GEN-END:variables
 }

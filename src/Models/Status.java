@@ -37,6 +37,5 @@ public class Status {
             System.out.println("Status.getTipoAtd(String cpf): " + e);
             return null;
         }
-    }
-    
+    }   
 }
