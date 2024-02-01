@@ -19,6 +19,7 @@ public class Usuarios {
             return rs.getString("especialidade");
             
         } catch (SQLException e) {
+            System.out.println("Usuarios.getEspecialidade(String login): " + e);
             return null;
         }
     }
@@ -39,6 +40,7 @@ public class Usuarios {
                 return null; 
             }
         } catch (SQLException e) {
+            System.out.println("Usuarios.getDadoUsuarioString(String dado, String s): " + e);
             return null;
         }
     }
@@ -59,7 +61,7 @@ public class Usuarios {
             stmt2.setInt(1, user.getId());
             stmt2.executeUpdate(); // executa o update           
         } catch(SQLException e) {
-            System.out.println("Erro ao atualizar " + e);
+            System.out.println("Usuarios.changeStatusOn(String login): " + e);
         }
     }
     
@@ -76,7 +78,7 @@ public class Usuarios {
             stmt2.executeUpdate();
             System.out.println("stmt2 passou");
         } catch (SQLException e) {
-            System.out.println("Erro ao atualizar " + e);
+            System.out.println("Usuarios.changeStatusOff(): " + e);
         }
     }
 }

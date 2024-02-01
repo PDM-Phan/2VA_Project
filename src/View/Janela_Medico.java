@@ -1,8 +1,7 @@
 package View;
 
 import DB_Connect.Comunica_Banco;
-import Models.Usuarios;
-import Models.Paciente;
+import Models.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -14,7 +13,8 @@ public class Janela_Medico extends javax.swing.JFrame {
     
     
     Paciente p = new Paciente(); // instancia o model de pacientes
-    Usuarios u = new Usuarios();
+    Usuarios u = new Usuarios(); // instancia o model para usuarios
+    Status s = new Status(); // instancia o model para status
     Comunica_Banco db = new Comunica_Banco();
     private Connection con;
     
@@ -36,7 +36,7 @@ public class Janela_Medico extends javax.swing.JFrame {
             }
             con.close();
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println("Janela_Medico.status(): " + e);
         }
         }
     
@@ -48,12 +48,17 @@ public class Janela_Medico extends javax.swing.JFrame {
 
     
     private void geraLista() {
-        ArrayList<Hospital.Paciente> pct = p.filtraPacientes();
-        
+        ArrayList<Hospital.Paciente> pct = p.filtraPacientes(); // Pega a lista de todos os pacientes do medico logado
         DefaultTableModel tabelaPacientes = (DefaultTableModel) tblPacientes.getModel(); //Traz as caracteristicas da tabela para a variavel
         
-        for (Hospital.Paciente paciente : pct) {
-            
+        for (Hospital.Paciente paciente : pct) { // Percorre todas os pacientes da lista
+            Object[] obj = new Object[] {
+                paciente.getId(),
+                paciente.getNome(),
+                s.getTipoAtd(paciente.getCpf()), //Função para pegar o tipo de atendimento diretamente da tabela baseado no cpf do paciente
+                s.getStatusAtd(paciente.getCpf()) //Função para pegar o status do paciente diretamente da tabela baseado no cpf do paciente
+            };
+            tabelaPacientes.addRow(obj); // Adciona o paciente na tabela
         }
     }
     
@@ -76,13 +81,14 @@ public class Janela_Medico extends javax.swing.JFrame {
         footer = new javax.swing.JPanel();
         lblStatus = new javax.swing.JLabel();
         lblData = new javax.swing.JLabel();
-        bAcao = new javax.swing.JButton();
+        bAtender = new javax.swing.JButton();
         lblPesquisa = new javax.swing.JLabel();
         txtPesquisa = new javax.swing.JTextField();
         bPesquisa = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPacientes = new javax.swing.JTable();
         geraLista1 = new javax.swing.JButton();
+        bAlta = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         bConfig = new javax.swing.JMenu();
         bLogoff = new javax.swing.JMenuItem();
@@ -149,15 +155,15 @@ public class Janela_Medico extends javax.swing.JFrame {
 
         getContentPane().add(footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 590, 46));
 
-        bAcao.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        bAcao.setText("Confirmar");
-        bAcao.setBorderPainted(false);
-        bAcao.addActionListener(new java.awt.event.ActionListener() {
+        bAtender.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        bAtender.setText("Atender");
+        bAtender.setBorderPainted(false);
+        bAtender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bAcaoActionPerformed(evt);
+                bAtenderActionPerformed(evt);
             }
         });
-        getContentPane().add(bAcao, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, -1, -1));
+        getContentPane().add(bAtender, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, -1, -1));
 
         lblPesquisa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblPesquisa.setLabelFor(txtPesquisa);
@@ -206,6 +212,16 @@ public class Janela_Medico extends javax.swing.JFrame {
         });
         getContentPane().add(geraLista1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, -1, -1));
 
+        bAlta.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        bAlta.setText("Dar alta");
+        bAlta.setBorderPainted(false);
+        bAlta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAltaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(bAlta, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, -1, -1));
+
         bConfig.setText("Configurações");
 
         bLogoff.setText("Logoff");
@@ -253,14 +269,9 @@ public class Janela_Medico extends javax.swing.JFrame {
         jm.setVisible(true);
     }//GEN-LAST:event_bLogoffActionPerformed
 
-    private void bAcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAcaoActionPerformed
+    private void bAtenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtenderActionPerformed
         // TODO add your handling code here:
-        System.out.println(p.filtraPacientes());
-    }//GEN-LAST:event_bAcaoActionPerformed
-
-    private void bPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPesquisaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bPesquisaActionPerformed
+    }//GEN-LAST:event_bAtenderActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
@@ -269,11 +280,20 @@ public class Janela_Medico extends javax.swing.JFrame {
 
     private void geraLista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_geraLista1ActionPerformed
         // TODO add your handling code here:
+        geraLista(); //Atualiza/Mostra a 
     }//GEN-LAST:event_geraLista1ActionPerformed
 
     private void mAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mAltaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_mAltaActionPerformed
+
+    private void bAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAltaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bAltaActionPerformed
+
+    private void bPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPesquisaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bPesquisaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -305,7 +325,8 @@ public class Janela_Medico extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bAcao;
+    private javax.swing.JButton bAlta;
+    private javax.swing.JButton bAtender;
     private javax.swing.JMenu bConfig;
     private javax.swing.JMenuItem bLogoff;
     private javax.swing.JButton bPesquisa;

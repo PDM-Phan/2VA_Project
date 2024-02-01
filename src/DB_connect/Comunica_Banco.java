@@ -61,7 +61,7 @@ public class Comunica_Banco {
             con = DriverManager.getConnection(url, user, password);
             return con;
         } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e);
+            System.out.println("Comunica_Banco.conectar(): " + e);
             return null;
         }
     }

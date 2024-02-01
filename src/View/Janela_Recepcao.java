@@ -30,7 +30,7 @@ public class Janela_Recepcao extends javax.swing.JFrame {
             }
             con.close();
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println("Janale_Recepcao.status():" + e);
         }
     }
     private void setarData() {

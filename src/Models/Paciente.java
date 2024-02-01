@@ -51,8 +51,7 @@ public class Paciente {
            return listaPacientes;
            
        } catch (SQLException e) {
-           System.out.println(e);
-           System.out.println("deu algo errado.");
+           System.out.println("Paciente.filtraPacientes(): " + e);
            return null; 
        }
     }

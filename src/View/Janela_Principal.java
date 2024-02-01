@@ -37,7 +37,7 @@ public class Janela_Principal extends javax.swing.JFrame {
             }
             con.close();
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println("janela_Pricnipal.Status: " + e);
         }
     }
     private void setarData() {
@@ -227,7 +227,7 @@ public class Janela_Principal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Email ou Senha incorretos!");
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, "Usuario não existe no sistema!");
+            JOptionPane.showMessageDialog(this, "Janela_Principal.botaoEntrarActionPerformed(): " + e);
         }
     }//GEN-LAST:event_botaoEntrarActionPerformed
 
