@@ -64,10 +64,11 @@ public class Janela_Medico extends javax.swing.JFrame {
         lblData = new javax.swing.JLabel();
         imgLocal = new javax.swing.JPanel();
         imgDoc = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        bImagem = new javax.swing.JButton();
+        geraLista = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        bLogoff = new javax.swing.JMenu();
-        logoff = new javax.swing.JMenuItem();
+        bConfig = new javax.swing.JMenu();
+        bLogoff = new javax.swing.JMenuItem();
         mOpcao = new javax.swing.JMenu();
         mAtender = new javax.swing.JMenuItem();
         mAlta = new javax.swing.JMenuItem();
@@ -83,6 +84,9 @@ public class Janela_Medico extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
 
@@ -136,27 +140,36 @@ public class Janela_Medico extends javax.swing.JFrame {
                 .addGap(128, 128, 128))
         );
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setText("Abrir Imagem");
-        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jButton1.setBorderPainted(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        bImagem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bImagem.setText("Abrir Imagem");
+        bImagem.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        bImagem.setBorderPainted(false);
+        bImagem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                bImagemActionPerformed(evt);
             }
         });
 
-        bLogoff.setText("Configurações");
-
-        logoff.setText("Logoff");
-        logoff.addActionListener(new java.awt.event.ActionListener() {
+        geraLista.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        geraLista.setText("Atualizar");
+        geraLista.setBorderPainted(false);
+        geraLista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logoffActionPerformed(evt);
+                geraListaActionPerformed(evt);
             }
         });
-        bLogoff.add(logoff);
 
-        jMenuBar1.add(bLogoff);
+        bConfig.setText("Configurações");
+
+        bLogoff.setText("Logoff");
+        bLogoff.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bLogoffActionPerformed(evt);
+            }
+        });
+        bConfig.add(bLogoff);
+
+        jMenuBar1.add(bConfig);
 
         mOpcao.setText("Opções");
 
@@ -176,9 +189,15 @@ public class Janela_Medico extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(footer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(bImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(geraLista)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(imgLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
@@ -186,8 +205,10 @@ public class Janela_Medico extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(imgLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(geraLista)
+                        .addComponent(imgLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(footer, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -202,18 +223,28 @@ public class Janela_Medico extends javax.swing.JFrame {
         this.setarData();
     }//GEN-LAST:event_formWindowActivated
 
-    private void logoffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoffActionPerformed
+    private void bLogoffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLogoffActionPerformed
         // TODO add your handling code here:
         u.changeStatusOff();
         Janela_Principal jm = new Janela_Principal();
         this.dispose();
         jm.setVisible(true);
-    }//GEN-LAST:event_logoffActionPerformed
+    }//GEN-LAST:event_bLogoffActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void bImagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bImagemActionPerformed
         // TODO add your handling code here:
-        System.out.println(p.getALLPacientes());
-    }//GEN-LAST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_bImagemActionPerformed
+
+    private void geraListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_geraListaActionPerformed
+        // TODO add your handling code here:
+        System.out.println(p.filtraPacientes());
+    }//GEN-LAST:event_geraListaActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        u.changeStatusOff();
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -251,17 +282,18 @@ public class Janela_Medico extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu bLogoff;
+    private javax.swing.JMenu bConfig;
+    private javax.swing.JButton bImagem;
+    private javax.swing.JMenuItem bLogoff;
     private javax.swing.JPanel footer;
+    private javax.swing.JButton geraLista;
     private javax.swing.JLabel imgDoc;
     private javax.swing.JPanel imgLocal;
-    private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblStatus;
-    private javax.swing.JMenuItem logoff;
     private javax.swing.JMenuItem mAlta;
     private javax.swing.JMenuItem mAtender;
     private javax.swing.JMenu mOpcao;

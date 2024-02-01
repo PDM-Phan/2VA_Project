@@ -30,7 +30,7 @@ public class Paciente extends Pessoa{
 
     @Override
     public String toString() {
-        String format = String.format("--> %s \nTelefone: %s\nCPF: %s", this.getNome(),
+        String format = String.format("--> %s \nTelefone: %s\nCPF: %s\n", this.getNome(),
                 this.getTelefone(), this.getCpf());
         return format;
     }

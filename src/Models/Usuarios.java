@@ -10,7 +10,19 @@ public class Usuarios {
     private final Comunica_Banco db = new Comunica_Banco();
     private final Connection con = db.conectar();
     
-
+    public String getEspecialidade(String login) {
+        String select = String.format("SELECT * FROM usuarios WHERE login = '%s';", login);
+        try {
+            PreparedStatement stmt = con.prepareStatement(select); // Prepara o SELECT
+            ResultSet rs = stmt.executeQuery(); // Executa o SELECT
+            rs.next();
+            return rs.getString("especialidade");
+            
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+    
     public String getDadoUsuarioString(String dado, String s) {
           
 
@@ -63,7 +75,7 @@ public class Usuarios {
             stmt2.setInt(1, rs.getInt("id"));
             stmt2.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Erro ao atualizar " + e);
+            //System.out.println("Erro ao atualizar " + e);
         }
     }
 }

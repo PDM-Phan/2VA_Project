@@ -29,10 +29,10 @@ public class Janela_Principal extends javax.swing.JFrame {
             con = db.conectar();
             if (con == null) {
                 //System.out.println("Erro de conexão");
-                lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/dboff.png")));
+                lblStatus1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/dboff.png")));
             } else {
                 //System.out.println("Banco conectado");
-                lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/dbon.png")));
+                lblStatus1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/dbon.png")));
             }
             con.close();
         } catch (SQLException e) {
@@ -48,11 +48,7 @@ public class Janela_Principal extends javax.swing.JFrame {
     private boolean verificaLogin(String login, String senha) {
             String lg = u.getDadoUsuarioString("login", login); //Pega o login
             String sh = u.getDadoUsuarioString("senha", senha); // Pega a senha
-            if (login.equals(lg) && senha.equals(sh)) {
-                return true; // Retorna true se for igual
-            } else {
-                return false;
-            }
+        return login.equals(lg) && senha.equals(sh); // Retorna true se for igual
     }
 
     /**
@@ -68,12 +64,16 @@ public class Janela_Principal extends javax.swing.JFrame {
         jFrame2 = new javax.swing.JFrame();
         lblStatus = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         lblLogin = new javax.swing.JLabel();
         lblSenha = new javax.swing.JLabel();
         textSenha = new javax.swing.JPasswordField();
         botaoEntrar = new javax.swing.JButton();
         textHeader = new javax.swing.JTextField();
-        footer = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        lblStatus1 = new javax.swing.JLabel();
         lblData = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
@@ -101,6 +101,12 @@ public class Janela_Principal extends javax.swing.JFrame {
         lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/dbon.png"))); // NOI18N
 
         jLabel1.setText("jLabel1");
+
+        jLabel2.setText("jLabel2");
+
+        jLabel3.setText("jLabel3");
+
+        jLabel4.setText("jLabel4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hospital Misericordia");
@@ -152,29 +158,36 @@ public class Janela_Principal extends javax.swing.JFrame {
         textHeader.setBorder(null);
         getContentPane().add(textHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        footer.setBackground(new java.awt.Color(0, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(0, 255, 255));
+        jPanel1.setPreferredSize(new java.awt.Dimension(310, 44));
 
         lblData.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblData.setForeground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout footerLayout = new javax.swing.GroupLayout(footer);
-        footer.setLayout(footerLayout);
-        footerLayout.setHorizontalGroup(
-            footerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, footerLayout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblData)
-                .addContainerGap(302, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 253, Short.MAX_VALUE)
+                .addComponent(lblStatus1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
         );
-        footerLayout.setVerticalGroup(
-            footerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, footerLayout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(lblData)
-                .addGap(30, 30, 30))
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 28, Short.MAX_VALUE)
+                        .addComponent(lblData))
+                    .addComponent(lblStatus1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
         );
 
-        getContentPane().add(footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 308, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 310, 50));
 
         pack();
         setLocationRelativeTo(null);
@@ -193,11 +206,21 @@ public class Janela_Principal extends javax.swing.JFrame {
         try {
             boolean v = verificaLogin(login, senha);
             if (v) {
-                //Abre a Janela_Medico após a verificação
-                u.changeStatusOn(login);
-                Janela_Medico jm = new Janela_Medico();
-                this.dispose();
-                jm.setVisible(true);
+                if (u.getEspecialidade(login).equals("Recepcionista")) {
+                    //Abre a Janela_Recepcao após a verificação
+                    u.changeStatusOn(login);
+                    Janela_Recepcao jr = new Janela_Recepcao();
+                    this.dispose();
+                    jr.setVisible(true);
+                } else {
+                    //Abre a Janela_Medico após a verificação
+                    u.changeStatusOn(login);
+                    Janela_Medico jm = new Janela_Medico();
+                    this.dispose();
+                    jm.setVisible(true);
+
+                }
+                
             } else {
                 JOptionPane.showMessageDialog(this, "Email ou Senha incorretos!");
             }
@@ -243,14 +266,18 @@ public class Janela_Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoEntrar;
-    private javax.swing.JPanel footer;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblLogin;
     private javax.swing.JLabel lblSenha;
     private javax.swing.JLabel lblStatus;
+    private javax.swing.JLabel lblStatus1;
     private javax.swing.JTextField textHeader;
     private final javax.swing.JTextField textLogin = new javax.swing.JTextField();
     private javax.swing.JPasswordField textSenha;
