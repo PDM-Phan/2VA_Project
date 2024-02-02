@@ -6,11 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import Models.Usuario;
-import javax.swing.JOptionPane;
-import View.Janela_Recepcao_Cadastrar;
+import Models.*;
 
-public class Paciente {
+public class Pacientes {
     private final Comunica_Banco db = new Comunica_Banco();
     private final Connection con = db.conectar();
     
@@ -102,6 +100,74 @@ public class Paciente {
         }
         
         return r;
+    }
+    
+    public Models.Paciente getPaciente(String txtnome) {
+        String sqlPaciente = String.format("SELECT * FROM paciente WHERE nome = '%s';", txtnome);
+        String sqlTipoATD = "SELECT * FROM status_atd WHERE cpf_paciente = ?;";
+        // Montando o obj Paciente
+        Models.Paciente p = new Paciente();
+        
+        try {
+            PreparedStatement stmt1 = con.prepareStatement(sqlPaciente); // Pega o paciente procurado
+            PreparedStatement stmt2 = con.prepareStatement(sqlTipoATD); // Puxa os dados do paciente da tabela status_atd
+            ResultSet rs1 = stmt1.executeQuery();
+            rs1.next();
+            stmt2.setString(1, rs1.getString("cpf"));
+            ResultSet rs2 = stmt2.executeQuery();
+            rs2.next();
+            p.setId(rs1.getInt("id"));
+            p.setNome(rs1.getString("nome"));
+            p.setCpf(rs1.getString("cpf"));
+            p.setTelefone(rs1.getString("telefone"));
+            p.setTipo_atd(rs2.getString("tipo_atd"));
+            
+        } catch (SQLException e) {
+            System.out.println("DAO.Pacientes.getPaciente: " + e);
+        }
+        
+        return p;
+    }
+    
+    public String atualizaTabela(String nome, String cpf, String telefone, String atd, String pesquisa) {
+        String status = "";
+        Paciente paciente = getPaciente(pesquisa); // usa o ID para os update
+        String sqlUPnome = String.format("UPDATE paciente SET nome = '%s' WHERE id = %d;", nome, paciente.getId());
+        String sqlUPcpf = String.format("UPDATE paciente SET cpf = '%s' WHERE id = %d;", cpf, paciente.getId());
+        String sqlUPtelefone = String.format("UPDATE paciente SET telefone = '%s' WHERE id = %d;", telefone, paciente.getId());
+        String sqlUPatd = String.format("UPDATE status_atd SET tipo_atd = '%s' WHERE cpf_paciente = '%s';", atd, paciente.getCpf());
+        
+        if (nome.length() !=  0) {
+            if (cpf.length() !=  0) {
+                if (telefone.length() !=  0) {
+                    try {
+                        // Prepara os Statements para fazer o update
+                        PreparedStatement stmt1 = con.prepareStatement(sqlUPnome);
+                        PreparedStatement stmt2 = con.prepareStatement(sqlUPcpf);
+                        PreparedStatement stmt3 = con.prepareStatement(sqlUPtelefone);
+                        PreparedStatement stmt4 = con.prepareStatement(sqlUPatd);
+                        // Executa os statements
+                        stmt1.execute();
+                        stmt2.execute();
+                        stmt3.execute();
+                        stmt4.execute();
+                        // Prepara para mostrar a mensagem na tela
+                        status = "sucesso";
+                    } catch (SQLException e) {
+                        System.out.println("DAO.Pacientes.atualizaTabela: " + e);
+                        status = "falha";
+                    }
+                } else {
+                    status = "falha";
+                }
+            } else {
+                status = "falha";
+            } 
+        }else {
+            status = "falha";
+        }
+        
+        return status;
     }
 }
 

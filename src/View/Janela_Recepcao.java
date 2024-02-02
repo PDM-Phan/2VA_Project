@@ -126,6 +126,11 @@ public class Janela_Recepcao extends javax.swing.JFrame {
         mAcao.add(bCadastro);
 
         bAtualizar.setText("Atualizar");
+        bAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAtualizarActionPerformed(evt);
+            }
+        });
         mAcao.add(bAtualizar);
 
         bExcluir.setText("Excluir");
@@ -163,6 +168,12 @@ public class Janela_Recepcao extends javax.swing.JFrame {
         Janela_Recepcao_Cadastrar jrc = new Janela_Recepcao_Cadastrar();
         jrc.setVisible(true);
     }//GEN-LAST:event_bCadastroActionPerformed
+
+    private void bAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtualizarActionPerformed
+        // TODO add your handling code here:
+        Janela_Recepcao_Atualizar jra = new Janela_Recepcao_Atualizar();
+        jra.setVisible(true);
+    }//GEN-LAST:event_bAtualizarActionPerformed
 
     /**
      * @param args the command line arguments

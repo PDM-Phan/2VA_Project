@@ -11,7 +11,7 @@ package View;
 public class Janela_Recepcao_Excluir extends javax.swing.JFrame {
 
     /**
-     * Creates new form Janela_Recepcao_Excluir
+     * Creates new form Janela_Recepcao_Atualizar
      */
     public Janela_Recepcao_Excluir() {
         initComponents();
@@ -67,6 +67,9 @@ public class Janela_Recepcao_Excluir extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Janela_Recepcao_Excluir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

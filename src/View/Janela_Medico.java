@@ -2,7 +2,7 @@ package View;
 
 import DAO.Status;
 import DAO.Usuarios;
-import DAO.Paciente;
+import DAO.Pacientes;
 import DB_Connect.Comunica_Banco;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 public class Janela_Medico extends javax.swing.JFrame {
     
     
-    Paciente p = new Paciente(); // instancia o model de pacientes
+    Pacientes p = new Pacientes(); // instancia o model de pacientes
     Usuarios u = new Usuarios(); // instancia o model para usuarios
     Status s = new Status(); // instancia o model para status
     Comunica_Banco db = new Comunica_Banco();

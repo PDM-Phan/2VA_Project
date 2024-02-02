@@ -1,11 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package View;
 
 import DAO.Usuarios;
-import DAO.Paciente;
+import DAO.Pacientes;
 import DB_Connect.Comunica_Banco;
 import Models.Usuario;
 import Util.Validator;
@@ -16,15 +12,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author orian
- */
 public class Janela_Recepcao_Cadastrar extends javax.swing.JFrame {
     
     Comunica_Banco db = new Comunica_Banco();
     Usuarios u = new Usuarios(); // instancia o model para usuarios
-    Paciente p = new Paciente();
+    Pacientes p = new Pacientes();
     private Connection con;
 
     public Janela_Recepcao_Cadastrar() {

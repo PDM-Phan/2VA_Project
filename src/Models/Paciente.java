@@ -3,6 +3,7 @@ package Models;
 public class Paciente extends Pessoa{
     private String cpf;
     private String telefone;
+    private String tipo_atd;
 
     public Paciente(String cpf, String telefone, String nome) {
         super(nome);
@@ -26,6 +27,14 @@ public class Paciente extends Pessoa{
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getTipo_atd() {
+        return tipo_atd;
+    }
+
+    public void setTipo_atd(String tipo_atd) {
+        this.tipo_atd = tipo_atd;
     }
 
     @Override

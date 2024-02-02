@@ -1,21 +1,53 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package View;
 
-/**
- *
- * @author orian
- */
-public class Janela_Recepcao_Atualizar extends javax.swing.JFrame {
+import DAO.Usuarios;
+import DAO.Pacientes;
+import DB_Connect.Comunica_Banco;
+import Models.Paciente;
+import Util.Validator;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
 
-    /**
-     * Creates new form Janela_Recepcao_Atualizar
-     */
+public class Janela_Recepcao_Atualizar extends javax.swing.JFrame {
+    
+    Comunica_Banco db = new Comunica_Banco();
+    Usuarios u = new Usuarios(); // instancia o model para usuarios
+    Pacientes p = new Pacientes();
+    private Connection con;
+    
     public Janela_Recepcao_Atualizar() {
         initComponents();
+        txtNome.setDocument(new Validator(30));
+        txtCPF.setDocument(new Validator(11));
+        txtTelefone.setDocument(new Validator(15));
     }
+    
+    private void status() {
+
+        try {
+            con = db.conectar();
+            if (con == null) {
+                //System.out.println("Erro de conexão");
+                lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/dboff.png")));
+            } else {
+                //System.out.println("Banco conectado");
+                lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/dbon.png")));
+            }
+            con.close();
+        } catch (SQLException e) {
+            System.out.println("janela_Pricnipal.Status: " + e);
+        }
+    }
+    
+    private void setarData() {
+        Date data = new Date(); // Recebe data do sistema
+        DateFormat formatador = DateFormat.getDateInstance(DateFormat.FULL); //responsavel para formatar a data
+        lblData.setText(formatador.format(data));// Altera o texto da Label para a data
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,21 +58,158 @@ public class Janela_Recepcao_Atualizar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        pHeader = new javax.swing.JPanel();
+        lblTitulo = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        lblStatus = new javax.swing.JLabel();
+        lblData = new javax.swing.JLabel();
+        lblNome = new javax.swing.JLabel();
+        lblCpf = new javax.swing.JLabel();
+        lblTelefone = new javax.swing.JLabel();
+        lblAtd = new javax.swing.JLabel();
+        jCBatd = new javax.swing.JComboBox<>();
+        txtTelefone = new javax.swing.JTextField();
+        txtCPF = new javax.swing.JTextField();
+        txtNome = new javax.swing.JTextField();
+        bAtualizar = new javax.swing.JButton();
+        lblPesquisar = new javax.swing.JLabel();
+        txtPesquisa = new javax.swing.JTextField();
+        bPesquisa = new javax.swing.JButton();
+        lblOBS = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Hospital Misericordia");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/Img/5724972_building_healthcare_hospital_medical_nursing_icon.png")).getImage());
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        pHeader.setBackground(new java.awt.Color(0, 153, 153));
+        pHeader.setPreferredSize(new java.awt.Dimension(400, 50));
+        pHeader.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        lblTitulo.setText("-----Atualizar Paciente-----");
+        pHeader.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 0, -1, -1));
+
+        getContentPane().add(pHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, -1));
+
+        jPanel2.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.add(lblStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, -1, -1));
+
+        lblData.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblData.setForeground(new java.awt.Color(255, 255, 255));
+        lblData.setText("jLabel1");
+        jPanel2.add(lblData, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 400, 50));
+
+        lblNome.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblNome.setText("Nome: ");
+        getContentPane().add(lblNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
+
+        lblCpf.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblCpf.setText("CPF: ");
+        getContentPane().add(lblCpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
+
+        lblTelefone.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblTelefone.setText("Telefone: ");
+        getContentPane().add(lblTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
+
+        lblAtd.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblAtd.setText("Atendimento: ");
+        getContentPane().add(lblAtd, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, -1));
+
+        jCBatd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jCBatd.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Catarata", "Retina", "Glaucoma" }));
+        getContentPane().add(jCBatd, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, -1, -1));
+
+        txtTelefone.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        getContentPane().add(txtTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 90, -1));
+
+        txtCPF.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        getContentPane().add(txtCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 90, -1));
+
+        txtNome.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        getContentPane().add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, 90, -1));
+
+        bAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bAtualizar.setText("Atualizar");
+        bAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAtualizarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(bAtualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 250, 100, 30));
+
+        lblPesquisar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblPesquisar.setText("Pesquisar Paciente: ");
+        getContentPane().add(lblPesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
+
+        txtPesquisa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        getContentPane().add(txtPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 110, -1));
+
+        bPesquisa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        bPesquisa.setText("Pesquisar");
+        bPesquisa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bPesquisaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(bPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, -1, -1));
+
+        lblOBS.setText("(Digite o nome do paciente)");
+        getContentPane().add(lblOBS, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtualizarActionPerformed
+        // Coloca em variaveis os dados dos campos
+        String nome = txtNome.getText();
+        String cpf = txtCPF.getText();
+        String telefone = txtTelefone.getText();
+        String atd = jCBatd.getSelectedItem().toString();
+        // Faz o update
+        String status = p.atualizaTabela(nome, cpf, telefone, atd, txtPesquisa.getText());
+        if (status.equals("falha")) {
+            JOptionPane.showMessageDialog(this, "Houve um erro durante o processo. Verifique os dados inseridos.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Dados do paciente atualizados com sucesso.");
+        }
+    }//GEN-LAST:event_bAtualizarActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        status();
+        setarData();
+    }//GEN-LAST:event_formWindowActivated
+
+    private void bPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPesquisaActionPerformed
+        // Pesquisar paciente
+        Paciente paciente = p.getPaciente(txtPesquisa.getText());
+ 
+        if (paciente.getNome() != null) {
+            JOptionPane.showMessageDialog(this, "Paciente encontrado.");
+            // Preenche os campos para atualizar
+            txtNome.setText(paciente.getNome());
+            txtCPF.setText(paciente.getCpf());
+            txtTelefone.setText(paciente.getTelefone());
+            jCBatd.setSelectedItem(paciente.getTipo_atd());
+        } else {
+            JOptionPane.showMessageDialog(this, "Houve um erro, verifique o nome do paciente.");
+            txtNome.setText("");
+            txtCPF.setText("");
+            txtTelefone.setText("");
+        }
+    }//GEN-LAST:event_bPesquisaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -68,15 +237,32 @@ public class Janela_Recepcao_Atualizar extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Janela_Recepcao_Atualizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Janela_Recepcao_Atualizar().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Janela_Recepcao_Atualizar().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bAtualizar;
+    private javax.swing.JButton bPesquisa;
+    private javax.swing.JComboBox<String> jCBatd;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblAtd;
+    private javax.swing.JLabel lblCpf;
+    private javax.swing.JLabel lblData;
+    private javax.swing.JLabel lblNome;
+    private javax.swing.JLabel lblOBS;
+    private javax.swing.JLabel lblPesquisar;
+    private javax.swing.JLabel lblStatus;
+    private javax.swing.JLabel lblTelefone;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JPanel pHeader;
+    private javax.swing.JTextField txtCPF;
+    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtPesquisa;
+    private javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
 }
