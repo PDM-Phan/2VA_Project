@@ -102,8 +102,35 @@ public class Pacientes {
         return r;
     }
     
-    public Models.Paciente getPaciente(String txtnome) {
+    public Models.Paciente getPacienteString(String txtnome) {
         String sqlPaciente = String.format("SELECT * FROM paciente WHERE nome = '%s';", txtnome);
+        String sqlTipoATD = "SELECT * FROM status_atd WHERE cpf_paciente = ?;";
+        // Montando o obj Paciente
+        Models.Paciente p = new Paciente();
+        
+        try {
+            PreparedStatement stmt1 = con.prepareStatement(sqlPaciente); // Pega o paciente procurado
+            PreparedStatement stmt2 = con.prepareStatement(sqlTipoATD); // Puxa os dados do paciente da tabela status_atd
+            ResultSet rs1 = stmt1.executeQuery();
+            rs1.next();
+            stmt2.setString(1, rs1.getString("cpf"));
+            ResultSet rs2 = stmt2.executeQuery();
+            rs2.next();
+            p.setId(rs1.getInt("id"));
+            p.setNome(rs1.getString("nome"));
+            p.setCpf(rs1.getString("cpf"));
+            p.setTelefone(rs1.getString("telefone"));
+            p.setTipo_atd(rs2.getString("tipo_atd"));
+            
+        } catch (SQLException e) {
+            System.out.println("DAO.Pacientes.getPaciente: " + e);
+        }
+        
+        return p;
+    }
+    
+        public Models.Paciente getPacienteInt(int id) {
+        String sqlPaciente = String.format("SELECT * FROM paciente WHERE id = %d;", id);
         String sqlTipoATD = "SELECT * FROM status_atd WHERE cpf_paciente = ?;";
         // Montando o obj Paciente
         Models.Paciente p = new Paciente();
@@ -131,7 +158,7 @@ public class Pacientes {
     
     public String atualizaTabela(String nome, String cpf, String telefone, String atd, String pesquisa) {
         String status = "";
-        Paciente paciente = getPaciente(pesquisa); // usa o ID para os update
+        Paciente paciente = getPacienteString(pesquisa); // usa o ID para os update
         String sqlUPnome = String.format("UPDATE paciente SET nome = '%s' WHERE id = %d;", nome, paciente.getId());
         String sqlUPcpf = String.format("UPDATE paciente SET cpf = '%s' WHERE id = %d;", cpf, paciente.getId());
         String sqlUPtelefone = String.format("UPDATE paciente SET telefone = '%s' WHERE id = %d;", telefone, paciente.getId());
@@ -167,6 +194,23 @@ public class Pacientes {
             status = "falha";
         }
         
+        return status;
+    }
+    
+    public String deletePaciente(String nome) { // Recebe o nome para verificar uma tabela do banco de dados
+        String status = "";
+        Models.Paciente p = this.getPacienteString(nome); // instacia o obj para receber o id (PK)
+        String sqlDelete = String.format("DELETE FROM paciente WHERE id = %d;", p.getId());
+        
+        try {
+            PreparedStatement stmt1 = con.prepareStatement(sqlDelete);
+            stmt1.execute();
+            status = "completo";
+        } catch (SQLException e) {
+            System.out.println("DAO.Pacientes.deletePaciente: " + e);
+            status = "falha";
+        }
+       
         return status;
     }
 }

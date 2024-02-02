@@ -74,6 +74,7 @@ public class Janela_Recepcao_Cadastrar extends javax.swing.JFrame {
         txtCPF = new javax.swing.JTextField();
         txtNome = new javax.swing.JTextField();
         bCadastrar = new javax.swing.JButton();
+        bCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Hospital Misericordia");
@@ -162,6 +163,15 @@ public class Janela_Recepcao_Cadastrar extends javax.swing.JFrame {
         });
         getContentPane().add(bCadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 250, 100, 30));
 
+        bCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bCancelar.setText("Cancelar");
+        bCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bCancelarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(bCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, -1, -1));
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -192,10 +202,20 @@ public class Janela_Recepcao_Cadastrar extends javax.swing.JFrame {
         String resultado = p.cadastrarPaciente(txtNome.getText(), txtCPF.getText(), txtTelefone.getText(), atd, medico);
         if (resultado.equals("realizado")) {
             JOptionPane.showMessageDialog(this, "Cadastro do paciente realizado com sucesso!");
+            txtNome.setText("");
+            txtCPF.setText("");
+            txtTelefone.setText("");
         } else {
             JOptionPane.showMessageDialog(this, "Preencha TODOS os campos para realizar o cadastro!");
         }
     }//GEN-LAST:event_bCadastrarActionPerformed
+
+    private void bCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarActionPerformed
+        // TODO add your handling code here:
+        txtNome.setText("");
+        txtCPF.setText("");
+        txtTelefone.setText("");
+    }//GEN-LAST:event_bCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,6 +248,7 @@ public class Janela_Recepcao_Cadastrar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bCadastrar;
+    private javax.swing.JButton bCancelar;
     private javax.swing.JComboBox<String> jCBatd;
     private javax.swing.JComboBox jCBmedico;
     private javax.swing.JPanel jPanel2;

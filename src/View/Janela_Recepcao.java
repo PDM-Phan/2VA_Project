@@ -134,6 +134,11 @@ public class Janela_Recepcao extends javax.swing.JFrame {
         mAcao.add(bAtualizar);
 
         bExcluir.setText("Excluir");
+        bExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bExcluirActionPerformed(evt);
+            }
+        });
         mAcao.add(bExcluir);
 
         jMenuBar1.add(mAcao);
@@ -174,6 +179,12 @@ public class Janela_Recepcao extends javax.swing.JFrame {
         Janela_Recepcao_Atualizar jra = new Janela_Recepcao_Atualizar();
         jra.setVisible(true);
     }//GEN-LAST:event_bAtualizarActionPerformed
+
+    private void bExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExcluirActionPerformed
+        // TODO add your handling code here:
+        Janela_Recepcao_Excluir jre = new Janela_Recepcao_Excluir();
+        jre.setVisible(true);
+    }//GEN-LAST:event_bExcluirActionPerformed
 
     /**
      * @param args the command line arguments

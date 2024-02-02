@@ -37,5 +37,36 @@ public class Status {
             System.out.println("Status.getTipoAtd(String cpf): " + e);
             return null;
         }
-    }   
+    }
+    
+    public String deleteStatus_atd(String cpf) { // Recebe o cpf para verificar uma tabela do banco de dados
+        String status = "";
+        String sqlDelete = String.format("DELETE FROM status_atd WHERE cpf_paciente = '%s';", cpf);
+        
+        try {
+            PreparedStatement stmt1 = con.prepareStatement(sqlDelete);
+            stmt1.execute();
+            status = "completo";
+        } catch (SQLException e) {
+            System.out.println("DAO.Status.deleteStatus_atd: " + e);
+            status = "falha";
+        }
+       
+        return status;
+    }
+    
+    public void setStatusPaciente(int id, String sts) {
+        Pacientes p = new Pacientes();
+        Models.Paciente paciente = p.getPacienteInt(id);
+        
+        String sqlUpdtStatus = String.format("UPDATE status_atd SET sts_atd = '%s' WHERE cpf_paciente = '%s';", sts, paciente.getCpf());
+        
+        try {
+            PreparedStatement stmt1 = con.prepareStatement(sqlUpdtStatus);
+            stmt1.execute(); 
+        } catch (SQLException e){
+            System.out.println("DAO.Status.setStatusPaciente: " + e);
+        }
+        
+    }
 }

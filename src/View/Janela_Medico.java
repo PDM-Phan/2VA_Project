@@ -92,6 +92,8 @@ public class Janela_Medico extends javax.swing.JFrame {
             case -2 -> JOptionPane.showMessageDialog(this, "Ação invalida."); // Retornou status "invalido"
             default -> {
                 if (tblPacientes.getSelectedRowCount() == 1) {
+                    // Altera o status na tabela de atendimento
+                    s.setStatusPaciente(idPacienteINT, nAtd);
                     // se apenas uma linha for selecionada, entao execute
                     DefaultTableModel tabelaPacientes = (DefaultTableModel) tblPacientes.getModel(); //Traz as caracteristicas da tabela para a variavel
                     tabelaPacientes.setValueAt(idPacienteINT, linhaSelecionada, 0);
@@ -101,7 +103,7 @@ public class Janela_Medico extends javax.swing.JFrame {
                     
                 } else {
                     JOptionPane.showMessageDialog(this, "Selecione apenas um paciente.");
-                }   ;
+                }
             }
         }
         
@@ -110,6 +112,7 @@ public class Janela_Medico extends javax.swing.JFrame {
     private String verificaStatusPaciente(String atd) {
         int linhaSelecionada = tblPacientes.getSelectedRow(); // pega a linha selecionada
         String statusPaciente = tblPacientes.getValueAt(linhaSelecionada, 3).toString(); // Pega o valor da coluna desejada
+        
         
         if (statusPaciente.equals("Aguardando Atendimento")) { // verifica se o status esta "Aguardando Atendimento"
             if(atd.equals("Atender")) { // Verifica se esta tentando atender

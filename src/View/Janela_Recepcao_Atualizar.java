@@ -23,6 +23,7 @@ public class Janela_Recepcao_Atualizar extends javax.swing.JFrame {
         txtNome.setDocument(new Validator(30));
         txtCPF.setDocument(new Validator(11));
         txtTelefone.setDocument(new Validator(15));
+        txtPesquisa.setDocument(new Validator(30));
     }
     
     private void status() {
@@ -76,6 +77,7 @@ public class Janela_Recepcao_Atualizar extends javax.swing.JFrame {
         txtPesquisa = new javax.swing.JTextField();
         bPesquisa = new javax.swing.JButton();
         lblOBS = new javax.swing.JLabel();
+        bCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Hospital Misericordia");
@@ -167,6 +169,15 @@ public class Janela_Recepcao_Atualizar extends javax.swing.JFrame {
         lblOBS.setText("(Digite o nome do paciente)");
         getContentPane().add(lblOBS, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, -1, -1));
 
+        bCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bCancelar.setText("Cancelar");
+        bCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bCancelarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(bCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, -1, -1));
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -183,6 +194,11 @@ public class Janela_Recepcao_Atualizar extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Houve um erro durante o processo. Verifique os dados inseridos.");
         } else {
             JOptionPane.showMessageDialog(this, "Dados do paciente atualizados com sucesso.");
+            txtPesquisa.setText("");
+            txtNome.setText("");
+            txtCPF.setText("");
+            txtTelefone.setText("");
+            
         }
     }//GEN-LAST:event_bAtualizarActionPerformed
 
@@ -194,7 +210,7 @@ public class Janela_Recepcao_Atualizar extends javax.swing.JFrame {
 
     private void bPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPesquisaActionPerformed
         // Pesquisar paciente
-        Paciente paciente = p.getPaciente(txtPesquisa.getText());
+        Paciente paciente = p.getPacienteString(txtPesquisa.getText());
  
         if (paciente.getNome() != null) {
             JOptionPane.showMessageDialog(this, "Paciente encontrado.");
@@ -210,6 +226,14 @@ public class Janela_Recepcao_Atualizar extends javax.swing.JFrame {
             txtTelefone.setText("");
         }
     }//GEN-LAST:event_bPesquisaActionPerformed
+
+    private void bCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarActionPerformed
+        // TODO add your handling code here:
+        txtPesquisa.setText("");
+        txtNome.setText("");
+        txtCPF.setText("");
+        txtTelefone.setText("");
+    }//GEN-LAST:event_bCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -247,6 +271,7 @@ public class Janela_Recepcao_Atualizar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAtualizar;
+    private javax.swing.JButton bCancelar;
     private javax.swing.JButton bPesquisa;
     private javax.swing.JComboBox<String> jCBatd;
     private javax.swing.JPanel jPanel2;
