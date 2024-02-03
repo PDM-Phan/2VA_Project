@@ -23,5 +23,7 @@
     > Adicionar usuarios padrão para a aplicação
     - insert into usuarios (login, senha, nome, especialidade, status_lg) values ('*login desejado*', '*senha desejada*', '*nome desejado*', 'Medico', 0); --INSERT PARA TER ACESSO A JANELA DE ATENDIMENTO
     - insert into usuarios (login, senha, nome, especialidade, status_lg) values ('*login desejado*', '*senha desejada*', '*nome desejado*', 'Recepcionista', 0); --INSERT PARA TER ACESSO A JANELA DA RECEPÇÂO
+    > Agora mudar so mais uma coisa para a conexão com o banco ser realizada:
+    - Va para a pasta DB_Connect/Conecta_Banco e altere os atributos para a sua conveniência, mudando o que for necessário (url, user, password).
 
  ### Boa experiência!!
