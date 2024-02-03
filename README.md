@@ -5,8 +5,8 @@
 ## Funcionalidades incluem:
 
 - Cadastro de pacientes : Logar com o perfil de recepção -> Menu OPÇÔES -> Cadastrar.
-- Atualização de dados do paciente já cadastrado: Logar com o perfil de recepção -> Menu OPÇÔES -> atualizar.
-- Excluir paciente das tabelas(Recomendado fazer isso depois do medico dar alta no paciente, para evitar conflitos): Logar com o perfil de recepção -> Menu OPÇÔES -> atualizar.
+- Atualização de dados do paciente já cadastrado: Logar com o perfil de recepção -> Menu OPÇÔES -> Atualizar.
+- Excluir paciente das tabelas(Recomendado fazer isso depois do medico dar alta no paciente, para evitar conflitos): Logar com o perfil de recepção -> Menu OPÇÔES -> Excluir.
 - Atender / Dar alta em pacientes vinculados a um medico: Logar com o perfil de medico -> Clicar no paciente desejado -> ATENDER primeiro e depois DAR ALTA.
 
 
