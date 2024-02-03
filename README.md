@@ -1,6 +1,6 @@
 # Software de atendimento de um hospital
 
-> ### Software hospital mizericordia, possui diversas telas e cada uma com suas proprias funcionalidades. O software completo porém, possui todas as caracteristica CRUD.
+> ### Software hospital misericordia, possui diversas telas e cada uma com suas proprias funcionalidades. O software completo porém, possui todas as caracteristica CRUD.
 
 ## Funcionalidades incluem:
 
@@ -12,18 +12,8 @@
 
 ## Observações:
   > Antes de começar é preciso fazer alguns passos.
-
-  - Ter o mySQL Workbench 8.0.28 para poder rodar os codigos necessários para o programa rodar;
-  - Execute as linhas de codigo abaixo na Query:
-    > preparar o schema e as tabelas.
-    - create database db2va;
-    - create table paciente ( id int primary key auto_increment, nome varchar(30), cpf varchar(11) unique, telefone varchar(15));
-    - create table status_atd (cpf_paciente varchar(11) primary key, sts_atd varchar(25), id_medico int, tipo_atd varchar(20));
-    - create table usuarios (id int primary key auto_increment, login varchar(30), senha varchar(30), nome varchar(30), especialidade varchar(15), status_lg int);
-    > Adicionar usuarios padrão para a aplicação
-    - insert into usuarios (login, senha, nome, especialidade, status_lg) values ('*login desejado*', '*senha desejada*', '*nome desejado*', 'Medico', 0); --INSERT PARA TER ACESSO A JANELA DE ATENDIMENTO
-    - insert into usuarios (login, senha, nome, especialidade, status_lg) values ('*login desejado*', '*senha desejada*', '*nome desejado*', 'Recepcionista', 0); --INSERT PARA TER ACESSO A JANELA DA RECEPÇÂO
-    > Agora mudar so mais uma coisa para a conexão com o banco ser realizada:
-    - Va para a pasta DB_Connect/Conecta_Banco e altere os atributos para a sua conveniência, mudando o que for necessário (url, user, password).
+  - Rode o arquivo SQL Setup_banco. (Foi usado o mySQL para criar os comandos, então se for usado um diferente, talvez seja necessário mudar algumas linhas)
+  > Agora mudar so mais uma coisa para a conexão com o banco ser realizada:
+  - Va para a pasta DB_Connect/Conecta_Banco e altere os atributos para a sua conveniência, mudando o que for necessário (url, user, password).
 
  ### Boa experiência!!
