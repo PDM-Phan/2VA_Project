@@ -161,6 +161,7 @@ public class Pacientes {
         Paciente paciente = getPacienteString(pesquisa); // usa o ID para os update
         String sqlUPnome = String.format("UPDATE paciente SET nome = '%s' WHERE id = %d;", nome, paciente.getId());
         String sqlUPcpf = String.format("UPDATE paciente SET cpf = '%s' WHERE id = %d;", cpf, paciente.getId());
+        String sqlCPFsts = String.format("UPDATE status_atd set cpf_paciente = '%s' WHERE cpf_paciente = '%s';", cpf, paciente.getCpf());
         String sqlUPtelefone = String.format("UPDATE paciente SET telefone = '%s' WHERE id = %d;", telefone, paciente.getId());
         String sqlUPatd = String.format("UPDATE status_atd SET tipo_atd = '%s' WHERE cpf_paciente = '%s';", atd, paciente.getCpf());
         
@@ -173,11 +174,13 @@ public class Pacientes {
                         PreparedStatement stmt2 = con.prepareStatement(sqlUPcpf);
                         PreparedStatement stmt3 = con.prepareStatement(sqlUPtelefone);
                         PreparedStatement stmt4 = con.prepareStatement(sqlUPatd);
+                        PreparedStatement stmt5 = con.prepareStatement(sqlCPFsts);
                         // Executa os statements
                         stmt1.execute();
                         stmt2.execute();
                         stmt3.execute();
                         stmt4.execute();
+                        stmt5.execute();
                         // Prepara para mostrar a mensagem na tela
                         status = "sucesso";
                     } catch (SQLException e) {

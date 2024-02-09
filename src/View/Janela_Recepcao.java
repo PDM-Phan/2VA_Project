@@ -66,8 +66,8 @@ public class Janela_Recepcao extends javax.swing.JFrame {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
             }
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -149,11 +149,6 @@ public class Janela_Recepcao extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        // TODO add your handling code here:
-        u.changeStatusOff();
-    }//GEN-LAST:event_formWindowClosed
-
     private void bLogoffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLogoffActionPerformed
         // TODO add your handling code here:
         u.changeStatusOff();
@@ -185,6 +180,11 @@ public class Janela_Recepcao extends javax.swing.JFrame {
         Janela_Recepcao_Excluir jre = new Janela_Recepcao_Excluir();
         jre.setVisible(true);
     }//GEN-LAST:event_bExcluirActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        u.changeStatusOff();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

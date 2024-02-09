@@ -8,7 +8,7 @@ public class Comunica_Banco {
     private  String driver = "com.mysql.cj.jdbc.Driver";
     private  String url = "jdbc:mysql://localhost:3306/db2va";
     private  String user = "root";
-    private  String password = "********";
+    private  String password = "Macacoalado1!";
 
     public String getDriver() {
         return driver;
